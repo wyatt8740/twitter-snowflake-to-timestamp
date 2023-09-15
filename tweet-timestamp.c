@@ -27,8 +27,16 @@ int main(int argc, char **argv) {
   }
 }
 
-/* convert snowflake ID to Unix timestamp */
-long long int timecalc(long long int tid) {
-  return (tid >> 22ll)/1000ll + 1288834974ll;
+long long int div_round_closest(const long long int n, const long long int d)
+{
+  return ((n < 0ll) == (d < 0ll)) ? ((n + d/2ll)/d) : ((n - d/2ll)/d);
 }
 
+/* convert snowflake ID to Unix timestamp */
+long long int timecalc(long long int tid) {
+  /* note that we lose granularity (and precision) here, because unix
+     timestamps are only accurate to the second (but snowflakes
+     are accurate to the millisecond). That's what the '/1000' is doing. */
+  /* return div_round_closest((tid >> 22ll),1000ll) + 1288834974ll; */
+  return (tid >> 22ll)/1000ll + 1288834974ll;
+}
