@@ -18,13 +18,13 @@ override CFLAGS += -g
 
 all: tweet-timestamp
 
-tweet-timestamp: tweet-timestamp.c
+tweet-timestamp: tweet_timestamp.c arg_parsing.c
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 .PHONY: clean
 
 clean:
-	rm -f tweet-timestamp
+	rm -f tweet-timestamp *.o
 
 # Strip will die on nonexistant files but will still strip whatever it can
 # first
